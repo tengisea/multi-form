@@ -2,11 +2,9 @@ import { ChevronRight } from "lucide-react";
 
 export const Continue = ({addStep}) => {
   return (
-    <div className="w-100 flex py-2.5 px-3 justify-center items-center rounded-md bg-[#121316] text-white " >
-      <button className="flex gap-1" onClick={addStep}>
+    <button onClick={addStep} type="submit" className=" flex flex-1 w-full h-11.5 px-3 py-2.5 justify-center items-center rounded-md bg-[#121316] text-white hover:opacity-80 gap-1 transition-all duration-300" >
         Continue
         <ChevronRight color="#ffffff"/>
-      </button>
-    </div>
+    </button>
   );
 };

@@ -2,11 +2,14 @@ import { Continue } from ".";
 
 export const FirstPage = ({ addStep, Header, Input, onChange }) => {
   return (
-    <div className="flex flex-col w-120 h-163.75 p-8 justify-between items-start rounded-lg bg-white">
-      <div className="">
+    <div className="flex flex-col w-114 h-163.75 p-8 justify-between items-start rounded-lg bg-white">
+      <div className="flex flex-col gap-3">
         <Header />
         <div className="flex flex-col gap-2">
-          <div className="flex">First name</div>
+          <div className="flex">
+            <div className="flex font-semibold">First name</div>
+            <div className="text-[#E14942]">*</div>
+          </div>
           <div className="">
             <Input
               type="text"
@@ -18,7 +21,10 @@ export const FirstPage = ({ addStep, Header, Input, onChange }) => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <div className="flex">Last name</div>
+          <div className="flex">
+            <div className="flex font-semibold">Last name</div>
+            <div className="text-[#E14942]">*</div>
+          </div>
           <div className="">
             <Input
               type="text"
@@ -30,7 +36,10 @@ export const FirstPage = ({ addStep, Header, Input, onChange }) => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <div className="flex">Username</div>
+          <div className="flex">
+            <div className="flex font-semibold">Username</div>
+            <div className="text-[#E14942]">*</div>
+          </div>
           <div className="">
             <Input
               type="text"
@@ -42,7 +51,9 @@ export const FirstPage = ({ addStep, Header, Input, onChange }) => {
           </div>
         </div>
       </div>
-      <Continue addStep={addStep}/>
+      <div className="flex w-full">
+        <Continue addStep={addStep} />
+      </div>
     </div>
   );
 };

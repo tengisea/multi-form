@@ -16,7 +16,6 @@ const Home = () => {
   const [formValues, setFormValues] = useState(initialFormValue);
 
   console.log("formvalues", formValues);
-  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -37,7 +36,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="flex justify-center min-h-screen">
+    <div className="flex justify-center items-center min-h-screen">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentStep}

@@ -9,7 +9,7 @@ export const Input = ({ type, placeholder, onChange, label, name }) => {
         name={name}
         onChange={onChange}
         label={label}
-        className="p-3 w-full border-[#8B8E95] rounded-lg focus:border-[#0CA5E9]"
+        className="p-3 w-full border-[#8B8E95] rounded-lg font-semibold focus:border-[#0CA5E9]"
       />
     </div>
   );
