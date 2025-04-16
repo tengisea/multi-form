@@ -7,19 +7,23 @@ import {
   ThirdPage,
   LastPage,
   Header,
-  Input,
 } from "./components";
 import { initialFormValue } from "@/constants/constant";
 
 const Home = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formValues, setFormValues] = useState(initialFormValue);
+  const [formErrors, setFormErrors] = useState(initialFormValue);
 
-  console.log("formvalues", formValues);
+  const updateFormErrors = (errors) => {
+    setFormErrors((previousErrors) => ({ ...previousErrors, ...errors }));
+  };
+  // console.log("formvalues", formValues);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
+    setFormErrors((previousErrors) => ({ ...previousErrors, [name]: "" }));
     setFormValues((previousValues) => ({ ...previousValues, [name]: value }));
   };
 
@@ -49,9 +53,11 @@ const Home = () => {
             addStep={addStep}
             prevStep={prevStep}
             Header={Header}
-            Input={Input}
             formValues={formValues}
             onChange={handleInputChange}
+            formErrors={formErrors}
+            setFormErrors={setFormErrors}
+            updateFormErrors={updateFormErrors}
           />
         </motion.div>
       </AnimatePresence>
