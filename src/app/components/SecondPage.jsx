@@ -1,14 +1,22 @@
-import { Back, Continue, Input } from ".";
+import { Back, Continue, Input, Header } from ".";
 
 export const SecondPage = ({
   addStep,
-  Header,
   onChange,
   prevStep,
   formErrors,
   formValues,
   updateFormErrors,
 }) => {
+
+  const { email, phoneNumber, password, confirmPassword } = formValues;
+  const {
+    email: errorEmail,
+    phoneNumber: errorPhoneNumber,
+    password: errorPassword,
+    confirmPassword: errorConfirmPassword,
+  } = formErrors;
+
   const isEmpty = (value) => !value?.trim();
   const validateStepTwo = ({
     email,
@@ -24,27 +32,25 @@ export const SecondPage = ({
 
     if (isEmpty(phoneNumber)) {
       validationErrors.phoneNumber = "Enter your phone number";
-    }
+    } else if (phoneNumber.length < 8) {
+      validationErrors.phoneNumber = "Phone number must be 8 digits";
 
     if (isEmpty(password)) {
       validationErrors.password = "Enter your password";
+    } else if (password.length < 6) {
+      validationErrors.password = "Password must be at least 6 characters";
     }
 
     if (isEmpty(confirmPassword)) {
-      validationErrors.confirmPassword = "Repeat your password";
+      validationErrors.confirmPassword = "Please confirm password";
+    } else if (confirmPassword !== password) {
+      validationErrors.confirmPassword = "Passwords do not match";
     }
 
     const isFormValid = Object.keys(validationErrors).length === 0;
     return { isFormValid, validationErrors };
   };
-
-  const { email, phoneNumber, password, confirmPassword } = formValues;
-  const {
-    email: errorEmail,
-    phoneNumber: errorPhoneNumber,
-    password: errorPassword,
-    confirmPassword: errorConfirmPassword,
-  } = formErrors;
+}
 
   const handleSubmit = (event) => {
     event.preventDefault();

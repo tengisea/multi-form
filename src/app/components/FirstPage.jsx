@@ -1,5 +1,4 @@
-import { Continue } from ".";
-import { Input } from ".";
+import { Continue, Input, Header } from ".";
 
 const isEmpty = (value) => !value?.trim();
 const validateStepOne = ({ firstName, lastName, username }) => {
@@ -23,7 +22,6 @@ const validateStepOne = ({ firstName, lastName, username }) => {
 
 export const FirstPage = ({
   addStep,
-  Header,
   onChange,
   formErrors,
   formValues,
@@ -55,7 +53,7 @@ export const FirstPage = ({
       className="flex flex-col w-114 h-163.75 p-8 justify-between items-start rounded-lg bg-white"
     >
       <div className="flex flex-col gap-3">
-        <Header />
+        <Header/>
         <div className="flex flex-col gap-2">
           <div className="">
             <Input

@@ -13,6 +13,10 @@ export const ThirdPage = ({
   updateFormErrors,
 }) => {
   const isEmpty = (value) => !value?.trim();
+  const inputImageRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [previewLink, setPreviewLink] = useState("");
+  const [tempFile, setTempFile] = useState({});
   const validateStepThree = ({ dateOfBirth, profileImage, error }) => {
     const validationErrors = {};
 
@@ -44,11 +48,6 @@ export const ThirdPage = ({
 
     updateFormErrors(validationErrors);
   };
-
-  const inputImageRef = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [previewLink, setPreviewLink] = useState("");
-  const [tempFile, setTempFile] = useState({});
 
   const openBrowse = () => {
     inputImageRef.current?.click();
