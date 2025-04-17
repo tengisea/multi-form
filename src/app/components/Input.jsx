@@ -8,6 +8,7 @@ export const Input = ({
   name,
   error,
   value,
+  ref
 }) => {
   return (
     <div>

@@ -38,22 +38,17 @@ export const FirstPage = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    addStep()
 
     const { isFormValid, validationErrors } = validateStepOne(formValues);
-    console.log(isFormValid);
 
     if (isFormValid) {
-      console.log("first");
-      // addStep();
-      //  <Continue/>
+      addStep()
       return;
     }
 
     updateFormErrors(validationErrors);
   };
 
-  console.log({ formValues });
   return (
     <form
       onSubmit={handleSubmit}

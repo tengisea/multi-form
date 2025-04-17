@@ -1,6 +1,6 @@
 "use client";
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FirstPage,
   SecondPage,
@@ -12,22 +12,47 @@ import { initialFormValue } from "@/constants/constant";
 
 const Home = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formValues, setFormValues] = useState(initialFormValue);
+  const [formValues, setFormValues] = useState((initialFormValue) => {
+    try {
+      const savedForm = localStorage.getItem("formValues");
+
+      return savedForm ? JSON.parse(savedForm) : 0;
+    } catch (error) {
+      console.error("Local storage error:", error);
+
+      return 0;
+    }
+  });
+
   const [formErrors, setFormErrors] = useState(initialFormValue);
 
   const updateFormErrors = (errors) => {
     setFormErrors((previousErrors) => ({ ...previousErrors, ...errors }));
   };
-  // console.log("formvalues", formValues);
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, files } = event.target;
 
     setFormErrors((previousErrors) => ({ ...previousErrors, [name]: "" }));
-    setFormValues((previousValues) => ({ ...previousValues, [name]: value }));
+    setFormValues((previousValues) => ({
+      ...previousValues,
+      [name]: files && files.length ? files[0] : value,
+    }));
   };
 
+  useEffect(() => {
+    const formValuesFromStorage = localStorage.getItem("formValues");
+    const parsedValues = JSON.parse(formValuesFromStorage);
+    setFormValues(parsedValues);
+    setCurrentStep(parsedValues.step ?? 0);
+  }, []);
+
   const addStep = () => {
+    localStorage.setItem(
+      "formValues",
+      JSON.stringify({ ...formValues, step: currentStep + 1 })
+    );
+
     setCurrentStep((prev) => prev + 1);
   };
 

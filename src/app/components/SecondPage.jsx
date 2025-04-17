@@ -72,6 +72,7 @@ export const SecondPage = ({
               type="email"
               placeholder="Your email"
               name="email"
+              value={email}
               onChange={onChange}
               label="Email"
               error={errorEmail}
@@ -84,6 +85,7 @@ export const SecondPage = ({
               type="number"
               placeholder="Your phone number"
               name="phoneNumber"
+              value={phoneNumber}
               onChange={onChange}
               label="Phone Number"
               error={errorPhoneNumber}
@@ -96,6 +98,7 @@ export const SecondPage = ({
               type="password"
               placeholder="Your password"
               name="password"
+              value={password}
               onChange={onChange}
               label="Password"
               minlength="6"
@@ -109,6 +112,7 @@ export const SecondPage = ({
               type="password"
               placeholder="Confirm password"
               name="confirmPassword"
+              value={confirmPassword}
               onChange={onChange}
               label="Confirm password"
               minlength="6"
@@ -118,7 +122,7 @@ export const SecondPage = ({
         </div>
       </div>
       <div className="flex gap-2 w-full">
-        <Back/>
+        <Back prevStep={prevStep}/>
         <Continue />
       </div>
     </form>

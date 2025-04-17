@@ -4,22 +4,6 @@ import { Continue, Header, Input, Back } from ".";
 import Image from "next/legacy/image";
 import { Images, X } from "lucide-react";
 
-const isEmpty = (value) => !value?.trim();
-const validateStepThree = ({ dateOfBirth, profileImage }) => {
-  const validationErrors = {};
-
-  if (isEmpty(dateOfBirth)) {
-    validationErrors.DateOfBirth = "Enter your date of birth";
-  }
-
-  if (isEmpty(profileImage)) {
-    validationErrors.profileImage = "Please choose your profile pictue";
-  }
-
-  const isFormValid = Object.keys(validationErrors).length === 0;
-  return { isFormValid, validationErrors };
-};
-
 export const ThirdPage = ({
   prevStep,
   addStep,
@@ -28,6 +12,22 @@ export const ThirdPage = ({
   formValues,
   updateFormErrors,
 }) => {
+  const isEmpty = (value) => !value?.trim();
+  const validateStepThree = ({ dateOfBirth, profileImage, error }) => {
+    const validationErrors = {};
+
+    if (isEmpty(dateOfBirth)) {
+      validationErrors.dateOfBirth = "Enter your date of birth";
+    }
+
+    if (!profileImage) {
+      validationErrors.profileImage = "Please choose your profile pictue";
+    }
+
+    const isFormValid = Object.keys(validationErrors).length === 0;
+    return { isFormValid, validationErrors };
+  };
+
   const { dateOfBirth, profileImage } = formValues;
   const { dateOfBirth: errorDateOfBirth, profileImage: errorProfileImage } =
     formErrors;
@@ -38,7 +38,6 @@ export const ThirdPage = ({
     const { isFormValid, validationErrors } = validateStepThree(formValues);
 
     if (isFormValid) {
-      prevStep();
       addStep();
       return;
     }
@@ -61,6 +60,7 @@ export const ThirdPage = ({
     if (file) {
       setTempFile(file);
       setPreviewLink(URL.createObjectURL(file));
+      onChange(event);
     }
   };
 
@@ -94,23 +94,30 @@ export const ThirdPage = ({
           <div className="">
             <Input
               type="date"
+              id="dateOfBirth"
               name="dateOfBirth"
+              value={dateOfBirth}
               onChange={onChange}
               label="Date of birth"
               error={errorDateOfBirth}
             />
           </div>
-          <div hidden onChange={handleInputChange}>
-            <Input
-              ref={inputImageRef}
+          <div>
+            <div className="flex">
+              <div className="font-semibold">Profile image</div>
+              <div className="text-red-500">*</div>
+            </div>
+
+            <input
               type="file"
-              placeholder="Add image"
+              ref={inputImageRef}
               name="profileImage"
-              onChange={onChange}
-              label="Profile Image"
-              error={errorProfileImage}
+              id=""
+              hidden
+              onChange={handleInputChange}
             />
           </div>
+
           <div
             className={`flex flex-col relative items-center justify-center gap-y-2 cursor-pointer bg-[#F8F8F8] h-[180px] border rounded-md border-solid ${
               isDragging
@@ -129,6 +136,7 @@ export const ThirdPage = ({
                   layout="fill"
                   alt=""
                   className="object-cover"
+                  label="Profile Image"
                 />
                 <button onClick={clearImage}>
                   <X
@@ -139,20 +147,24 @@ export const ThirdPage = ({
                 </button>
               </div>
             ) : (
-              <div
-                className="flex flex-col justify-center items-center"
-                onClick={openBrowse}
-              >
-                <Images size={16} color="#000000" />
-                "Browse or Drop Image"
+              <div>
+                <div className="flex flex-col justify-center items-center">
+                  <Images size={16} color="#000000" />
+                  "Browse or Drop Image"
+                </div>
               </div>
             )}
           </div>
+          {!profileImage && (
+            <p className="text-red-500 text-xs">{errorProfileImage}</p>
+          )}
         </div>
       </div>
       <div className="flex gap-2 w-full">
         <Back prevStep={prevStep} />
-        <Continue  />
+        <div onChange={localStorage.clear}>
+        <Continue />
+        </div>
       </div>
     </form>
   );
