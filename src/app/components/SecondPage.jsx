@@ -1,39 +1,17 @@
 import { Back, Continue, Input, Header } from ".";
 
-export const SecondPage = ({
-  addStep,
-  onChange,
-  prevStep,
-  formErrors,
-  formValues,
-  updateFormErrors,
-}) => {
+const isEmpty = (value) => !value?.trim();
+const validateStepTwo = ({ email, phoneNumber, password, confirmPassword }) => {
+  const validationErrors = {};
 
-  const { email, phoneNumber, password, confirmPassword } = formValues;
-  const {
-    email: errorEmail,
-    phoneNumber: errorPhoneNumber,
-    password: errorPassword,
-    confirmPassword: errorConfirmPassword,
-  } = formErrors;
+  if (isEmpty(email)) {
+    validationErrors.email = "Enter your email";
+  }
 
-  const isEmpty = (value) => !value?.trim();
-  const validateStepTwo = ({
-    email,
-    phoneNumber,
-    password,
-    confirmPassword,
-  }) => {
-    const validationErrors = {};
-
-    if (isEmpty(email)) {
-      validationErrors.email = "Enter your email";
-    }
-
-    if (isEmpty(phoneNumber)) {
-      validationErrors.phoneNumber = "Enter your phone number";
-    } else if (phoneNumber.length < 8) {
-      validationErrors.phoneNumber = "Phone number must be 8 digits";
+  if (isEmpty(phoneNumber)) {
+    validationErrors.phoneNumber = "Enter your phone number";
+  } else if (!phoneNumber.length === 8) {
+    validationErrors.phoneNumber = "Phone number must be 8 digits";}
 
     if (isEmpty(password)) {
       validationErrors.password = "Enter your password";
@@ -49,8 +27,24 @@ export const SecondPage = ({
 
     const isFormValid = Object.keys(validationErrors).length === 0;
     return { isFormValid, validationErrors };
-  };
-}
+  }
+
+export const SecondPage = ({
+  addStep,
+  onChange,
+  prevStep,
+  formErrors,
+  formValues,
+  updateFormErrors,
+}) => {
+  const { email, phoneNumber, password, confirmPassword } = formValues;
+
+  const {
+    email: errorEmail,
+    phoneNumber: errorPhoneNumber,
+    password: errorPassword,
+    confirmPassword: errorConfirmPassword,
+  } = formErrors;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -113,7 +107,7 @@ export const SecondPage = ({
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <div className="">
+          <div>
             <Input
               type="password"
               placeholder="Confirm password"

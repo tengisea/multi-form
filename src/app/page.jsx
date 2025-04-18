@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
@@ -7,7 +7,6 @@ import {
   SecondPage,
   ThirdPage,
   LastPage,
-  Header,
 } from "./components";
 import { initialFormValue } from "@/constants/constant";
 
@@ -23,7 +22,7 @@ const Home = () => {
       if (savedForm) {
         const parsed = JSON.parse(savedForm);
         setFormValues(parsed);
-        setCurrentStep(parsed.step || 0);
+        setCurrentStep(parsed.step ?? 0);
       }
     } catch (error) {
       console.error("Local storage error:", error);
@@ -47,9 +46,7 @@ const Home = () => {
   };
 
   const addStep = () => {
-    localStorage.setItem(
-      "formValues",
-      JSON.stringify({ ...formValues, step: currentStep + 1 })
+    localStorage.setItem("formValues",JSON.stringify({ ...formValues, step: currentStep + 1 })
     );
     setCurrentStep((prev) => prev + 1);
   };

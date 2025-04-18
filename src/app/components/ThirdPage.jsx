@@ -17,11 +17,19 @@ export const ThirdPage = ({
   const [isDragging, setIsDragging] = useState(false);
   const [previewLink, setPreviewLink] = useState("");
   const [tempFile, setTempFile] = useState({});
+
   const validateStepThree = ({ dateOfBirth, profileImage, error }) => {
     const validationErrors = {};
 
+    const today = new Date();
+    const insertedDateOfBirth = new Date(dateOfBirth);
+
+    const minus = today.getFullYear() - insertedDateOfBirth.getFullYear();
+
     if (isEmpty(dateOfBirth)) {
       validationErrors.dateOfBirth = "Enter your date of birth";
+    } else if (minus < 18) {
+      validationErrors.dateOfBirth = "You must be at least over 18";
     }
 
     if (!profileImage) {
@@ -43,6 +51,7 @@ export const ThirdPage = ({
 
     if (isFormValid) {
       addStep();
+      localStorage.removeItem("formValues");
       return;
     }
 
@@ -161,9 +170,8 @@ export const ThirdPage = ({
       </div>
       <div className="flex gap-2 w-full">
         <Back prevStep={prevStep} />
-        <div onChange={localStorage.clear}>
+
         <Continue />
-        </div>
       </div>
     </form>
   );
